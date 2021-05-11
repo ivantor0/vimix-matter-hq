@@ -7,7 +7,7 @@
 
 ## How to use?
 
-First, check if you have Matter's dependencies installed: these are `python` (version 3.6 or higher), `grub-mkconfig` and `grub-mkfont`, which are standart componentd of Ubuntu installations, so you should have them, and also `inkscape`, which you may have to install (`sudo apt install inkscape`).
+First, check if you have Matter's dependencies installed: these are `python` (version 3.6 or higher), `grub-mkconfig` and `grub-mkfont`, which are standart components of Ubuntu installations, so you should have them, and also `inkscape`, which you may have to install (`sudo apt install inkscape`).
 
 Next, clone or download+extract this repo, then enter the `vimix-matter-hq` directory. Get your GRUB entries list using `./matter.py` and select which icons you want to have displayed next to them (find the material design icons you want [here](https://materialdesignicons.com/) and use their IDs). Set the `vmhq.sh` script as executable (`chmod +x vmhq.sh`) and run it with root privileges (so it could write to `/boot/grub`) passing the icons list: `sudo bash vmhq.sh <icon_1> <icon_2> ... <icon_X>`.
 
@@ -22,13 +22,13 @@ sudo bash vmhq.sh microsoft-windows ubuntu folder _ _ _ _ microsoft-windows cog
 
 Following Matter's readme, I should note that updates to your system will sometimes change the GRUB menu (for example, the number of available items). For this reason you'll have to rerun `sudo bash vmhq.sh` from time to time, so consider not to delete the repository folder or be ready to repeat this procedure.
 
-## What' s changed from Matter?
+## What's changed from Matter?
 
 * **Prebuilt image.** While Matter focuses on providing the means to compose your desired image from the modules of your selection, I instead decided to share a layout that I find aesthetically pleasant and facilitate the process of cloning this specific image. This means that, in case you have a 1920x1080 display and wish to have the same image as presented above, the process is quite simple — just follow the instructions above. If, however, you wish to change some components, you should refer to the next chapter or just use [Matter](https://github.com/mateosss/matter) — that would be easier to start from in case you want to replace the majority of my assets.
 * **No stuttering when switching between menu items.** This is achieved by adding transparent pixmaps for the corners of inactive menu items with the same dimensions as the selected item ones.
 * **Wider menu items.** This allows to display the full names for the majority of items, while also not obstructing the background image.
-* **Prerendered Roboto font.** While some conversion results I got were pretty glitchy and ugly, Roboto seemed quite fine (see screenshot), even if still grainy — which, in fact, can not be changed.
-* **Some other stuff**. I changed some font settings including size and color (to match that of Acer's logo) and used Vimix background picture (obviously).
+* **Prerendered Roboto font.** While some conversion results I got were pretty glitchy and ugly, Roboto seemed quite fine (see screenshot), even if still grainy — which, in fact, cannot be changed.
+* **Some other stuff.** I changed some font settings including size and color (to match that of Acer's logo) and used Vimix background picture (obviously).
 
 
 ## How do I change anything?
