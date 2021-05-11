@@ -2,16 +2,16 @@
 # already parsed and the comments below could not make too much sense.
 
 # theme.txt.template represents a python string that gets format()-ed
-# Note: for escaping literal curly braces, double them like so: { or }
+# Note: for scaping literal curly braces, double them like so: { or }
 
 # Matter Theme File
 # Designed for any resolution
 
 # Global Property
 title-text: ""
-# desktop-image: "background.png"
-desktop-color: "#263238"
-terminal-font: "default" # a random name to let the default font for the console
+desktop-image: "background.jpg"
+desktop-color: "#282629"
+terminal-font: "Unifont Regular 16"
 terminal-box: "terminal_box_*.png"
 terminal-left: "0"
 terminal-top: "0"
@@ -21,17 +21,18 @@ terminal-border: "0"
 
 # Show the boot menu
 + boot_menu {
-  left = 36%
+  left = 20%
   top = 29%
-  width = 28%
+  width = 60%
   height = 60%
-  item_font = "Google Sans Regular 32"
+  item_font = "Roboto Regular 40"
   item_color = "#ffffff"
-  selected_item_color = "#e91e63"
+  selected_item_color = "#83B81A"
   icon_width = 72
   icon_height = 72
   item_height = 72
   item_spacing = 36
+  item_pixmap_style = "inactive_*.png"
   selected_item_pixmap_style = "select_*.png"
 }
 
@@ -44,5 +45,5 @@ terminal-border: "0"
   id = "__timeout__"
   text = "Booting in %d seconds"
   color = "#ffffff"
-  font = "Google Sans Regular 32"
+  font = "Roboto Regular 40"
 }

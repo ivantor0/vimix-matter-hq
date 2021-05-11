@@ -1,375 +1,49 @@
-# Matter
+# vimix-matter-hq
 
-Minimalist grub theme originally inspired by material design 2.
+![vmhq screenshot](vmhq_screenshot.png)
 
-![Matter Gif](.docs/matter.gif)
+`vimix-matter-hq` is a GRUB theme for 1920x1080px display that I created using [Matter](https://github.com/mateosss/matter) editor with [Vimix](https://github.com/vinceliuice/grub2-themes) background by also applying some out of Matter's scope improvements. As the layout looks cleaner and better to me than most of the publicly available themes, and I also used some options that I haven't been able to find in other repos, I decided to share my config to make your loading screen hopefully more pleasant, while also making the process of setting it up easier.
 
-Feel free open issues for any problem or request you have and/or submit pull
-requests.
 
-# Index
+## How to use?
 
-- [Matter](#matter)
-- **[Download](#download)**
-- [Usage](#usage)
-  - [Help](#help)
-  - **[Quick Start](#quick-start)**
-  - [Uninstall](#uninstall)
-  - [Fonts](#fonts)
-  - [Colors](#colors)
-  - [Images](#images-unfinished)
-  - [Testing Without Rebooting](#testing-without-rebooting)
-- [What does Matter do to my system
-  files?](#what-does-matter-do-to-my-system-files)
-- [Gallery](#gallery): [1](#example-1), [2](#example-2), [3](#example-3),
-  [4](#example-4), [5](#example-5), [6](#example-6), [7](#example-7),
-  [8](#example-8), [9](#example-9), [10](#example-10), [11](#example-11)
-- [Contributing](#contributing)
-- [Thanks](#thanks)
+First, check if you have Matter's dependencies installed: these are `python` (version 3.6 or higher), `grub-mkconfig` and `grub-mkfont`, which are standart componentd of Ubuntu installations, so you should have them, and also `inkscape`, which you may have to install (`sudo apt install inkscape`).
 
-# Download
+Next, clone or download+extract this repo, then enter the `vimix-matter-hq` directory. Get your GRUB entries list using `./matter.py` and select which icons you want to have displayed next to them (find the material design icons you want [here](https://materialdesignicons.com/) and use their IDs). Set the `vmhq.sh` script as executable (`chmod +x vmhq.sh`) and run it with root privileges (so it could write to `/boot/grub`) passing the icons list: `sudo bash vmhq.sh <icon_1> <icon_2> ... <icon_X>`.
 
-[Click here to download Matter](https://github.com/mateosss/matter/releases/latest/download/matter.zip)
-
-It is **strongly adviced** to put the downloaded files in some folder that will
-not get deleted, as the main script `matter.py` is needed for future grub
-updates made by your system. Also if you wan't to uninstall matter you could do
-it from there as well.
-
-## Dependencies
-
-Matter will inform you of any missing dependencies, but here is a list anyways:
-
-- `inkscape` (**Main dependency**): This brings the `convert` command from
-  `imagemagick` with best svg to png conversion.
-- `grub-mkconfig` and `grub-mkfont`: General grub utilities needed, if you
-  don't have these, please create an issue with more information about your
-  system as I've only worked with ones that have these commands.
-- [`grub2-theme-preview`](https://github.com/hartwork/grub2-theme-preview)
-  (Optional): For testing results (`--test/-t` argument) without rebooting.
-
-# Usage
-
-## Help
-
-You always can see the command reference with `./matter.py -h`, next up are some
-sections that may be useful, or may not be very well documented in the command's
-help.
-
-## Quick Start
-
-<details>
-
-<summary>Note for Fedora users (click to show)</summary>
-
-*Matter does not yet support [The Boot Loader
-Specification](https://systemd.io/BOOT_LOADER_SPECIFICATION/) so before executing
-`matter.py` you should set `GRUB_ENABLE_BLSCFG="false"` in `/etc/default/grub` and then
-update your grub file with `sudo grub2-mkconfig -o /boot/grub2/grub.cfg`*
-
-*See [this issue](https://github.com/mateosss/matter/issues/41) for updates
-or if you want to help out with fedora support*
-
-</details>
-
-Following is a Matter installation with default values. Don't worry, it is very
-easy to rollback or overwrite this installation later if you wan't to.
-
-The script that does all the work is `matter.py`, so let's start by running it
-
+For example, this is how to get the same loading screen as on the screenshot above, supposing that you have the same menu item order:
 ```sh
+git clone https://github.com/isikus/vimix-matter-hq
+cd vimix-matter-hq
 ./matter.py
+chmod +x vmhq.sh
+sudo bash vmhq.sh microsoft-windows ubuntu folder _ _ _ _ microsoft-windows cog
 ```
 
-It outputs almost everything you need to know for later, but for now let's focus
-on the list it shows, those are your grub entries. It should look similar to
-this one:
+Following Matter's readme, I should note that updates to your system will sometimes change the GRUB menu (for example, the number of available items). For this reason you'll have to rerun `sudo bash vmhq.sh` from time to time, so consider not to delete the repository folder or be ready to repeat this procedure.
 
-```sh
-1. Ubuntu
-2. Windows
-3. More Options
-4. Ubuntu, with Linux 5.3.0-61-generic
-5. Ubuntu, with Linux 5.3.0-61-generic (recovery mode)
-6. Ubuntu, with Linux 5.3.0-59-generic
-7. Ubuntu, with Linux 5.3.0-59-generic (recovery mode)
-8. System Setup
-```
+## What' s changed from Matter?
 
-Now you should pick some icons from <https://materialdesignicons.com> for each entry
-listed, (you only need the icon's name, use the search panel and hover over any
-icon you like to see its name). In these example I will pick `ubuntu` for entry
-1, `microsoft-windows` for 2, `folder` for 3 (as it is a submenu in my
-particular case), and `cog` for 8, I don't care about all the remaining entries
-so I will just use "`_`" (underscore) for those.
+* **Prebuilt image.** While Matter focuses on providing the means to compose your desired image from the modules of your selection, I instead decided to share a layout that I find aesthetically pleasant and facilitate the process of cloning this specific image. This means that, in case you have a 1920x1080 display and wish to have the same image as presented above, the process is quite simple — just follow the instructions above. If, however, you wish to change some components, you should refer to the next chapter or just use [Matter](https://github.com/mateosss/matter) — that would be easier to start from in case you want to replace the majority of my assets.
+* **No stuttering when switching between menu items.** This is achieved by adding transparent pixmaps for the corners of inactive menu items with the same dimensions as the selected item ones.
+* **Wider menu items.** This allows to display the full names for the majority of items, while also not obstructing the background image.
+* **Prerendered Roboto font.** While some conversion results I got were pretty glitchy and ugly, Roboto seemed quite fine (see screenshot), even if still grainy — which, in fact, can not be changed.
+* **Some other stuff**. I changed some font settings including size and color (to match that of Acer's logo) and used Vimix background picture (obviously).
 
-```sh
-# Installs matter with icons matching the corresponding entries
-./matter.py -i ubuntu microsoft-windows folder _ _ _ _ cog
-```
 
-**And thats it!** If you reboot now, you should get something like this:
+## How do I change anything?
 
-![Quick Start Result](.docs/quickstartresult.png)
+Depending on what you want to have changed, here are some useful tips for you. Please make any change *before* running `vmhq.sh` script.
+* *Icons.* You are, in fact, *required* to list them — this is covered in **How to use?** section above. [Find](https://materialdesignicons.com/) the material design icons you need and list their IDs in correspondence with the menu items listed by `./matter.py`.
+* *Background picture.* Just change the `background.jpg` in the `Matter` folder (mind the extension and resolution).
+* *Item order (how did you get yours?).* This is a little bit tricky — you have to install and run [`grub-customizer`](https://launchpad.net/grub-customizer) (follow [these instructions](https://vitux.com/how-to-install-grub-customizer-on-ubuntu/)). Booting timer is also changed via `grub-customizer`.
+* *Text color.* Run `python helper.py color <general_color> <selection_color>; sudo bash vmhq.sh`.
+* *Font.* Get a .ttf file and then run `grub-mkconfig -v -n <font_name> -s <font_size> <font_ttf_file> -o font.pf2`. Note the font name appearing in the output of previous command and pass it to `helper.py` as such: `python helper.py font "<Your font name>"; sudo bash vmhq.sh` (mind the hyphens).
+* *Screen resolution.* Uh oh — I only tested the theme on my 1920x1080 display. My best advice would be to get the appropriate media from [Vimix](https://github.com/vinceliuice/grub2-themes/tree/master/backgrounds) repo corresponding with your resolution (and possibly scale it with GIMP), recreate the transparent `inactive_*` pixmap PNGs with your proper resolution using GIMP, overwrite the media files in `Matter` folder and then probably play with font size in Matter using provided `fonts/Roboto.ttf` file and `-fs` option (e. g. `./matter.py --buildonly -ff ./fonts/Roboto.ttf -fn "Roboto Regular" -fs 24`). Please keep in mind that this process might require several trial-and-error iterations and feel free to open a pull request with your results should you succeed!
+* *Other changes.* You might consider playing around with some [Matter](https://github.com/mateosss/matter) arguments (e. g. to change icon color), tweaking `theme.txt` ([this](http://wiki.rosalab.ru/en/index.php/Grub2_theme_/_reference) is the best guide I could find), replacing media in `Matter` folder or straightforward editing `/boot/grub/grub.cfg` otherwise (which is, of course, not recommended). Note that GRUB is quite a basic and low-level tool (as intended), so there might be not too many options to play with.
 
-*Tip: If you need to tidy up your grub entries hierarchy and names I recommend
-using [grub-customizer](https://launchpad.net/grub-customizer)
-([tutorial](https://vitux.com/how-to-install-grub-customizer-on-ubuntu/))*.
 
-## Uninstall
+## Note
 
-You can completely remove Matter from your system with `./matter.py -u`
+I am not planning to actively maintain this repo – the motivation to create this fork was just to share what I came up with in my environment. While I may add some additional fixes (probably as a result of running into any problems on my machine), I do not aim to expand the project and such. I will, however, look up to any pull requests that may be proposed and merge them. Please feel free to propose fixes or extensions to this fork!
 
-## Fonts
-
-Matter uses `.ttf` fonts and only one, the default, comes prepackaged. You can
-specify your own fonts by giving a `.ttf` file, the font name, and an optional
-font size like so:
-
-```sh
-./matter.py -ff ~/fonts/Cinzel/Cinzel-Regular.ttf -fn Cinzel Regular -fs 40
-```
-
-- `--fontfile/-ff`: The `.ttf` path
-- `--fontname/-fn`: The name of the font, in this case `Cinzel Regular` but
-  could be `Open Sans Bold` (*Tip: If you don't know the font name, you can
-  specify any name, go to the grub, press C to open console, and type `lsfonts`
-  to list the font names*)
-- `--fontsize/-fs`: By default it is 32, recommended values are multiples of 4.
-- `--font/-f`: This argument is not used in this example as it is used to select
-  prepackaged fonts. Note that after giving a ttf file to `-ff`, matter will
-  save it as a prepackaged font, so it could be referenced later on with this
-  flag. See prepackaged (available) fonts at the end of `--help/-h` output
-
-*Tip: [Google Fonts](https://fonts.google.com/) is a good place to get fonts*
-
-## Colors
-
-You can specify the color of 4 elements: `--foreground/-fg`, `--background/-bg`,
-`--iconcolor/-ic` and `--highlight/-hl` (selected text color), there are some
-Material Design colors prepackaged that you can see at the end of the
-`--help/-h` output, you can also specify custom colors. Here is an example of
-the syntax:
-
-```sh
-./matter.py -hl FFC107 -fg white -bg 2196f3 -ic pink
-```
-
-## Images (unfinished)
-
-You can specify a background image with `--image/-im`, the supported image
-formats/extensions are PNG, JPG, JPEG, and TGA. This feature is considered
-*unfinished* because it does not yet work as well as it could *(see
-[#58](https://github.com/mateosss/matter/issues/58))*
-
-Here is an example of the syntax:
-
-```sh
-./matter.py -im ~/Pictures/some-cool-image-that-has-good-contrast-with-my-text-color.png
-```
-
-## Testing Without Rebooting
-
-If you install the `pip` package
-[`grub2-theme-preview`](https://github.com/hartwork/grub2-theme-preview) you can
-test combinations of fonts and colors with the `--buildonly/-b` and `--test/-t`
-flags like so:
-
-```sh
-./matter.py -t -b -i ubuntu microsoft-windows folder _ _ _ _ _ _ cog \
--hl FFC107 -fg white -bg 2196F3 \
--ff ~/fonts/MuseoModerno/static/MuseoModerno-Regular.ttf \
--fn MuseoModerno Regular -fs 40
-```
-
-*Note: it will use your system's grub.cfg, so set your icons beforehand*.
-
-# What does Matter do to my system files?
-
-Besides the need for the extracted files to be in a persistent location, Matter
-needs to edit three files:
-
-1. `/etc/default/grub`: For setting theme and resolution.
-2. `/boot/grub/grub.cfg`: For setting icons.
-3. `/usr/sbin/grub-mkconfig`: For making icons persistent across grub updates.
-4. `/etc/grub.d/99_matter`: For making icons persistent across grub upgrades.
-
-Also it places the theme files in `/boot/grub/themes/Matter/`, this one is
-standard to grub themes in general.
-
-Both **(1)** and **(3)** are clearly distinguished with special `BEGIN`/`END`
-comments at the end of each file. **(2)** Adds a `--class` flag to each entry,
-but it can be restored as new with `update-grub`. And **(4)** is a custom file.
-
-*All of these modifications are **completely** cleaned up by uninstalling*
-
-# Gallery
-
-Here are some examples with their respective commands that you can copy or get
-inspired from.
-
-## Example 1
-
-![Example 1](.docs/gallery1.gif)
-
-*Font: [Josefin Sans Regular
-400](https://fonts.google.com/specimen/Josefin+Sans)*
-
-```sh
-# Light version, invert -fg and -bg for dark one
-./matter.py -i ubuntu microsoft-windows folder _ _ _ _ _ _ cog \
--hl ef233c -fg 2b2d42 -bg edf2f4 \
--ff ~/fonts/Josefin_Sans/static/JosefinSans-Regular.ttf \
--fn Josefin Sans Regular -fs 32
-```
-
-## Example 2
-
-![Example 2](.docs/gallery2.png)
-
-*Font: [Comfortaa Medium 500](https://fonts.google.com/specimen/Comfortaa)*
-
-```sh
-./matter.py -i ubuntu microsoft-windows folder _ _ _ _ _ _ cog \
--hl white -fg f0f0f0 -bg ff0d7b \
--ff ~/fonts/Comfortaa/static/Comfortaa-Medium.ttf \
--fn Comfortaa Regular -fs 32
-```
-
-## Example 3
-
-![Example 3](.docs/gallery3.png)
-
-*Font: [Lobster Regular 400](https://fonts.google.com/specimen/Lobster)*
-
-```sh
-./matter.py -i ubuntu microsoft-windows folder _ _ _ _ _ _ cog \
--hl 118ab2 -fg ffd166 -bg 073b4c \
--ff ~/fonts/Lobster/Lobster-Regular.ttf \
--fn Lobster Regular -fs 32
-```
-
-## Example 4
-
-![Example 4](.docs/gallery4.gif)
-
-*Fonts: [Bebas Neue Regular 400](https://fonts.google.com/specimen/Bebas+Neue)
-and [Russo One Regular 400](https://fonts.google.com/specimen/Russo+One)*
-
-```sh
-# Using Bebas Neue font (more compact), the other uses Russo One
-./matter.py -i ubuntu microsoft-windows folder _ _ _ _ _ _ cog \
--hl 2c251b -fg 2c251b -bg ffe70b \
--ff ~/fonts/Bebas_Neue/BebasNeue-Regular.ttf \
--fn Bebas Neue Regular -fs 36
-# -ff ~/fonts/Russo_One/RussoOne-Regular.ttf \
-# -fn Russo One Regular -fs 36
-
-```
-
-## Example 5
-
-![Example 5](.docs/gallery5.png)
-
-*Font: [Poiret One Regular 400](https://fonts.google.com/specimen/Poiret+One)*
-
-```sh
-./matter.py -i ubuntu microsoft-windows folder _ _ _ _ _ _ cog \
--hl black -fg 101010 -bg fce1e0 \
--ff ~/fonts/Poiret_One/PoiretOne-Regular.ttf \
--fn Poiret One Regular -fs 48
-```
-
-## Example 6
-
-![Example 6](.docs/gallery6.png)
-
-*Font: [Josefin Sans Medium
-500](https://fonts.google.com/specimen/Josefin+Sans)*
-
-```sh
-./matter.py -i ubuntu microsoft-windows folder _ _ _ _ _ _ cog \
--hl ffe78a -fg fdf7f9 -bg 582335 \
--ff ~/fonts/Josefin_Sans/static/JosefinSans-Medium.ttf \
--fn Josefin Sans Regular -fs 32
-```
-
-## Example 7
-
-![Example 7](.docs/gallery7.png)
-
-*Font: [Josefin Slab Bold 700](https://fonts.google.com/specimen/Josefin+Slab)*
-
-```sh
-./matter.py -i ubuntu microsoft-windows folder _ _ _ _ _ _ cog \
--hl A4E11E -fg white -bg 5b1ee1 \
--ff ~/fonts/Josefin_Slab/JosefinSlab-Bold.ttf \
--fn Josefin Slab Bold -fs 36
-```
-
-## Example 8
-
-![Example 8](.docs/gallery8.png)
-
-*Font: [MuseoModerno Regular
-400](https://fonts.google.com/specimen/MuseoModerno)*
-
-```sh
-./matter.py -i ubuntu microsoft-windows folder _ _ _ _ _ _ cog \
--hl FFC107 -fg white -bg 2196F3 \
--ff ~/fonts/MuseoModerno/static/MuseoModerno-Regular.ttf \
--fn MuseoModerno Regular -fs 32
-```
-
-## Example 9
-
-![Example 9](.docs/gallery9.png)
-
-*Font: [Amatic SC Regular 400](https://fonts.google.com/specimen/Amatic+SC)*
-
-```sh
-./matter.py -i ubuntu microsoft-windows folder _ _ _ _ _ _ cog \
--bg FFF8E1 -fg 263238 -hl E91E63 \
--ff ~/fonts/Amatic_SC/AmaticSC-Regular.ttf \
--fn Amatic SC Regular -fs 64
-```
-
-## Example 10
-
-![Example 10](.docs/gallery10.gif)
-
-*Font: [Cinzel Regular 400](https://fonts.google.com/specimen/Cinzel)*
-
-```sh
-# This is the light version, the dark one uses -bg 1a1d21 -fg c9a45b instead
-./matter.py -i ubuntu microsoft-windows folder _ _ _ _ _ _ cog \
--hl c28f2c -bg white -fg d0a85c \
--ff ~/fonts/Cinzel/Cinzel-Regular.ttf \
--fn Cinzel Regular -fs 40
-# -hl c28f2c -bg 1a1d21 -fg c9a45b \
-```
-
-## Example 11
-
-![Example 11](.docs/gallery11.png)
-
-```sh
-./matter.py -i ubuntu microsoft-windows folder _ _ _ _ _ _ cog \
--im ~/images/material-background.png
-```
-
-# Contributing
-
-Feel free to submit any pull request that improves in any way the project.
-
-Read the wiki <https://github.com/mateosss/matter/wiki>, that's where any useful
-information for developers will reside.
-
-If you think you got a nice result out of Matter and would like to share it,
-please create an issue with it! I would love to see your results.
-
-# Thanks
-
-- Original theme based on <https://github.com/vinceliuice/grub2-themes>
-- Icons from <https://materialdesignicons.com/>
-- Fonts mainly from <https://fonts.google.com>
