@@ -13,7 +13,7 @@ Next, clone or download+extract this repo, then enter the `vimix-matter-hq` dire
 
 For example, this is how to get the same loading screen as on the screenshot above, supposing that you have the same menu item order:
 ```sh
-git clone https://github.com/isikus/vimix-matter-hq
+git clone https://github.com/ivantor0/vimix-matter-hq
 cd vimix-matter-hq
 ./matter.py
 chmod +x vmhq.sh
